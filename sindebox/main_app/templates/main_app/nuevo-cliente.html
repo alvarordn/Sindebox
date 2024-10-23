@@ -1,0 +1,110 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<div class="main_container">
+    
+    <div class='card card--dark' >
+        <div class="card__body">
+            <p>
+              Usted va a dar de alta a un nuevo cliente
+              <p>&emsp;&#8594 Se le solicitará información para dar de alta al cliente </p>
+              <p>&emsp;&#8594 Si desea generar un presupuesto, posteriormente lo podrá realizar en <a href="{% url 'nuevo_presupuesto' %}">Nuevo presupuesto</a> </p>
+            </p>
+        </div>
+    </div>
+
+    <form method='POST' action=""  class="form">
+        {% csrf_token %}
+        <!-- Input:Text -->
+        <div class="form__field">
+          <label for="formInput#text">Nombre: </label>
+          <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="nombre"
+            placeholder="Introduzca el nombre completo incluyendo los apellidos"
+          />
+        </div>
+
+
+        <!-- Input:Email -->
+        <div class="form__field">
+          <label for="formInput#email">Correo electrónico: </label>
+          <input
+            class="input input--email"
+            id="formInput#email"
+            type="email"
+            name="correo"
+            placeholder="e.g. user@domain.com"
+          />
+        </div>
+
+        <!-- Input:Radio -->
+        <div class="form__field form__field--radio">
+          <p>Tipo de cliente:</p>
+          <input 
+            class="input input--radio" 
+            id="formInput#radio-01" 
+            type="radio" 
+            value="1" 
+            name="tipo" 
+          />
+          <label for="formInput#radio-01">Cliente residencial</label>
+          <input 
+            class="input input--radio" 
+            id="formInput#radio-02" 
+            type="radio" 
+            value="2" 
+            name="tipo" 
+          />
+          <label for="formInput#radio-02">Cliente profesional</label>
+          <input 
+            class="input input--radio" 
+            id="formInput#radio-03" 
+            type="radio" 
+            value="3" 
+            name="tipo" 
+          />
+          <label for="formInput#radio-03">Otros</label>
+        </div>
+
+        
+        <!-- Input:Email -->
+        <div class="form__field">
+            <label for="formInput#textarea">Número de teléfono:  </label>
+            <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="numero"
+            placeholder="Introduzca el número de teléfono"
+          />
+          </div>
+
+        <!-- Textarea -->
+        <div class="form__field">
+          <label for="formInput#textarea">Descripción: </label>
+          <input
+            class="input input--text"
+            id="formInput#text"
+            type="text"
+            name="descripcion"
+            placeholder="Datos adicionales sobre el cliente"
+          />
+        </div>
+
+
+        <!-- Input:Submit / Input:Reset  -->
+        <div class="form__field form__field--action">
+          <input class="btn" type="reset" value="Borrar" />
+          <input class="btn btn--main" type="submit" value="Crear cliente" />
+        </div>
+      </form>
+
+</div>  
+
+
+
+{% endblock content %}

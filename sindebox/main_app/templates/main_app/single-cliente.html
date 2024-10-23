@@ -1,0 +1,38 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<div class="main_container">
+    <div class='card' >
+        <div class="card__body">
+            <h4> {{ cliente.nombre}} </h4>
+            <p> {{ cliente.correo}} </p>
+            <p> {{ cliente.tipo}} </p>
+            <p> {{ cliente.numero}} </p>
+            <p> {{ cliente.descripcion}} </p>
+        </div>    
+    </div>
+
+    <h2>Presupuestos asociados a {{ cliente.nombre }}</h2>
+        {% if presupuestos %}
+            <ul>
+                {% for presupuesto in presupuestos %}
+                <div class='card' >
+                    <div class="card__body">
+                        <strong><a href="{% url 'presupuesto' presupuesto.referencia %}">Referencia: {{ presupuesto.referencia }}</a></strong> <br>  
+                        <strong>Coste:</strong> {{ presupuesto.coste }}<br>                  
+                    </div>    
+                </div>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay presupuestos asociados a este cliente.</p>
+        {% endif %}
+
+
+
+</div>  
+
+
+
+{% endblock content %}
