@@ -1,0 +1,3 @@
+- Instalación del Shelly
+- Django deployment
+- Autentificación para la escritura de datos por parte del Shelly
