@@ -17,3 +17,13 @@ def main_view(request):
         return JsonResponse({'status': 'success'})
     return render(request, 'main_app/main_view.html')
 
+def datos(request):
+    return render(request, 'main_app/datos.html', {'datos': EnergyData.objects.all() })
+
+def dato(request, pk):
+    for i in EnergyData.objects.all():
+        if str(i.id) == pk:            
+            EnergyObj = i
+            break
+    return render(request, 'main_app/dato.html', {'dato': EnergyData})
+

@@ -3,18 +3,19 @@
 {% block content %}
 
 <div class="main_container">
-    <h1> Clientes </h1>
+    <h1> Datos de los SmartMeters </h1>
     <div class="grid grid--three">
-        {% for cliente in clientes %}
+        {% for dato in datos %}
 
             <div class="column">
 
                 <div class='card' >
-                    <a href='{% url 'cliente' cliente.referencia %}'>
+                    <a href='{% url 'dato' dato.id %}'>
                         <div class="card__body">
-                            <h4>{{ cliente.nombre }}</h4>
-                            <p>{{ cliente.correo }}</p>  
-                            <p>{{ cliente.get_tipo_display  }}</p>  
+                            <h4>{{ dato.timestamp }}</h4>
+                            <p>{{ dato.voltage }}</p>  
+                            <p>{{ dato.current  }}</p>  
+                            <p>{{ dato.power  }}</p>  
                         </div>  
                     </a>
                 </div>  

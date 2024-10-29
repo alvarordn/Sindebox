@@ -10,17 +10,18 @@
           <span>Menu</span>
           <div class="toggle-menu__lines"></div>
         </label>
-        <ul class="header__menu">{% comment %}
-          <li class="header__menuItem"><a href="{% url 'clientes' %}">Clientes</a></li>
+        <ul class="header__menu">
+          <li class="header__menuItem"><a href="{% url 'main_view' %}">Inicio</a></li>
+          <li class="header__menuItem"><a href="{% url 'datos' %}">Datos</a></li>{% comment %}
           <li class="header__menuItem"><a href="{% url 'nuevo_cliente' %}">Nuevo cliente</a></li>
           <li class="header__menuItem"><a href="{% url 'presupuestos' %}">Presupuestos</a></li>
           <li class="header__menuItem"><a href="{% url 'nuevo_presupuesto' %}">Nuevo presupuesto</a></li>
           <li class="header__menuItem"><a href="{% url 'about' %}">Sobre nosotros</a></li>
-          <li class="header__menuItem"><a href="{% url 'base_view' %}" class="btn btn--sub">Página principal</a></li>{% endcomment %}
+          <li class="header__menuItem"><a href="{% url 'base_view' %}" class="btn btn--sub">Página principal</a></li>
           <li class="header__menuItem">Inicio</li>
           <li class="header__menuItem">item2</li>
           <li class="header__menuItem">item3</li>
-          <li class="header__menuItem">item4</li>
+          <li class="header__menuItem">item4</li>{% endcomment %}
         </ul>
       </nav>
     </div>
