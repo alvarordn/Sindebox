@@ -11,8 +11,13 @@ from rest_framework.response import Response
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def my_secure_view(request):
-    data = request.data
-    return Response({"message": "Datos recibidos correctamente"})
+    data = json.loads(request.body)
+    EnergyData.objects.create(
+        voltage=data['voltage'],
+        current=data['current'],
+        power=data['power']
+    )
+    return JsonResponse({'status': 'success'})
 
 
 def main_view(request):
