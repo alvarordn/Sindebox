@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from datetime import datetime
+from django.utils import timezone
 
 # Create your models here.
 class EnergyData(models.Model):
@@ -8,5 +8,5 @@ class EnergyData(models.Model):
     voltage = models.FloatField(default=0)
     current = models.FloatField(default=0)
     power = models.FloatField(default=0)
-    timestamp = models.DateTimeField(default=datetime.now)
+    timestamp = models.DateTimeField(default=timezone.now)
     
