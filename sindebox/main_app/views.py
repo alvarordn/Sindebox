@@ -17,6 +17,14 @@ def my_secure_view(request):
     )
     return JsonResponse({'status': 'success'})
 
+def my_shelly(request):
+    data = json.loads(request.body)
+    EnergyData.objects.create(
+        voltage=data['voltage'],
+        current=data['current'],
+        power=data['power']
+    )
+    return JsonResponse({'status': 'success'})
 
 def main_view(request):
     return render(request, 'main_app/main_view.html')
@@ -29,5 +37,5 @@ def dato(request, pk):
         if str(i.id) == pk:            
             EnergyObj = i
             break
-    return render(request, 'main_app/dato.html', {'dato': EnergyData})
+    return render(request, 'main_app/dato.html', {'dato': EnergyObj})
 
