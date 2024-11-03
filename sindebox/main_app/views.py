@@ -17,6 +17,7 @@ def my_secure_view(request):
     )
     return JsonResponse({'status': 'success'})
 
+@api_view(['POST'])
 def my_shelly(request):
     data = json.loads(request.body)
     EnergyData.objects.create(
