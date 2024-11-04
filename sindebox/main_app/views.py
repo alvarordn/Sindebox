@@ -18,6 +18,7 @@ def my_secure_view(request):
     return JsonResponse({'status': 'success'})
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def my_shelly(request):
     data = json.loads(request.body)
     EnergyData.objects.create(
