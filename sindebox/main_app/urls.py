@@ -9,6 +9,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/secure/', views.my_secure_view, name='my_secure_view'),
-    path('api/shelly/token/', TokenObtainPairView.as_view() name='token_obtain_shelly'),
+    path('api/shelly/token/', TokenObtainPairView.as_view(), name='token_obtain_shelly'),
     path('api/shelly/secure/', views.my_shelly, name='my_shelly'),
 ]
