@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponse 
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from .models import EnergyData
@@ -21,21 +21,21 @@ def basic_auth(request):
 def my_shelly(request):
     username, password = basic_auth(request)
     if username is None or password is None:
-        return JsonResponse({'status': 'no credentials'})
+        return HttpResponse('no credentials')
     if username != "sindetec" or password != "macarena":
-        return JsonResponse({'status': 'Invalid credentials'})
+        return HttpResponse('Invalid credentials')
     try:
         request_body = request.body.decode('utf-8')
         data = json.loads(request_body)
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
-        return JsonResponse({'status': 'Invalid JSON'})
+        return HttpResponse({'status': 'Invalid JSON'})
     data = json.loads(request.body)
     EnergyData.objects.create(
         voltage=data['voltage'],
         current=data['current'],
         power=data['power']
     )
-    return JsonResponse({'status': 'success'})
+    return HttpResponse('success')
 
     # if request.method == 'POST':
     #     data = json.loads(request.body)
