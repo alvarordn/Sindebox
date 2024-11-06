@@ -50,8 +50,7 @@ REST_FRAMEWORK = {
     ),
 }
 
-SHELLY_SECRET_KEY = 'macarena' 
-SHELLY_REALM = 'shellyproem50-08f9e0e68234' 
+SHELLY_PASSWORD = 'macarena'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
