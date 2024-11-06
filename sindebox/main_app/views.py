@@ -20,16 +20,16 @@ def basic_auth(request):
 @csrf_exempt
 @api_view(['POST'])
 def my_shelly(request):
-    username, password = basic_auth(request)
-    if username is None or password is None:
-        return JsonResponse({'status': 'no credentials'})
-    if username != "sindetec" or password != "macarena":
-        return JsonResponse({'status': 'Invalid credentials'})
-    try:
-        request_body = request.body.decode('utf-8')
-        data = json.loads(request_body)
-    except (json.JSONDecodeError, UnicodeDecodeError) as e:
-        return JsonResponse({'status': 'Invalid JSON'})
+    # username, password = basic_auth(request)
+    # if username is None or password is None:
+    #     return JsonResponse({'status': 'no credentials'})
+    # if username != "sindetec" or password != "macarena":
+    #     return JsonResponse({'status': 'Invalid credentials'})
+    # try:
+    #     request_body = request.body.decode('utf-8')
+    #     data = json.loads(request_body)
+    # except (json.JSONDecodeError, UnicodeDecodeError) as e:
+    #     return JsonResponse({'status': 'Invalid JSON'})
 
 
     data = json.loads(request.body)
