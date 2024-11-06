@@ -1,0 +1,54 @@
+let token_data = {
+    "username": "sindetec",  
+    "password": "macarena"  
+}  
+let data_dict = {
+    "voltage": 1111,
+    "current": 2222,
+    "power": 1133350
+};
+let CONFIG = {
+  host: "https://alvarordneu.eu.pythonanywhere.com/api/secure/",
+  username: "sindetec",
+  password: "macarena",
+}
+let bsb_lan_url = "https://alvarordneu.eu.pythonanywhere.com/api/secure/";
+let user_pass = btoa(CONFIG.username + ":" + CONFIG.password);
+let header = {
+  method: "POST",
+  url: bsb_lan_url,
+  body: data_dict,
+  headers: {},
+  timeout: 20,
+};          
+function TokenRequest(response, error_code, error_message) {
+     if (error_code === 0) {              
+        print("Datos enviados con éxito:");
+        let body = JSON.parse(response.body);
+        let accessToken = body.access;
+        print("Token de acceso:", accessToken);
+        header.headers.Authorization = "Bearer " + accessToken;
+        
+        Shelly.call("HTTP.Request", header, function (result, error_code, error_message) {
+          if (error_code === 0) {
+            print("Success: " + JSON.stringify(result));
+          } else {
+            print("Error code: " + error_code);
+            print("Errormessage: " + error_message)
+          }
+        }, null);
+        
+     } else {
+        print("Error al enviar los datos:", error_message);
+     }
+}
+
+Shelly.call("HTTP.POST",  
+            {
+              url: "https://alvarordneu.eu.pythonanywhere.com/api/token/",
+              body: JSON.stringify(token_data) ,
+              headers: {
+                "Content-Type": "application/json"
+              }               
+            }, 
+            TokenRequest)
