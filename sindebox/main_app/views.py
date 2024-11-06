@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 def basic_auth(request):
     auth_header = request.headers.get('Authorization', None)
     if auth_header is None or not auth_header.startswith('Basic '):
-        return None        
+        return None, None        
     auth_value = auth_header[6:]  
     decoded_value = b64decode(auth_value).decode('utf-8')  
     username, password = decoded_value.split(':')
