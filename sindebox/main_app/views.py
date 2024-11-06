@@ -28,7 +28,7 @@ def my_shelly(request):
         request_body = request.body.decode('utf-8')
         data = json.loads(request_body)
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
-        return HttpResponse({'status': 'Invalid JSON'})
+        return HttpResponse('Invalid JSON')
     data = json.loads(request.body)
     EnergyData.objects.create(
         voltage=data['voltage'],
