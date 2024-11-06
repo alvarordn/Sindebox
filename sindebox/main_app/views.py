@@ -18,7 +18,6 @@ def basic_auth(request):
     return username, password
 
 @csrf_exempt
-@api_view(['POST'])
 def my_shelly(request):
     # username, password = basic_auth(request)
     # if username is None or password is None:
@@ -31,14 +30,14 @@ def my_shelly(request):
     # except (json.JSONDecodeError, UnicodeDecodeError) as e:
     #     return JsonResponse({'status': 'Invalid JSON'})
 
-
-    data = json.loads(request.body)
-    EnergyData.objects.create(
-        voltage=data['voltage'],
-        current=data['current'],
-        power=data['power']
-    )
-    return JsonResponse({'status': 'success'})
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        EnergyData.objects.create(
+            voltage=data['voltage'],
+            current=data['current'],
+            power=data['power']
+        )
+        return JsonResponse({'status': 'success'})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
