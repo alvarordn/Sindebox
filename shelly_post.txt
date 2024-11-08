@@ -2,11 +2,7 @@ let token_data = {
     "username": "sindetec",  
     "password": "macarena"  
 }  
-let data_dict = {
-    "voltage": 1111,
-    "current": 2222,
-    "power": 1133350
-};
+let device_id = "shellyproem50-08f9e0e68234";
 let CONFIG = {
   host: "https://alvarordneu.eu.pythonanywhere.com/api/secure/",
   username: "sindetec",
@@ -17,21 +13,23 @@ let user_pass = btoa(CONFIG.username + ":" + CONFIG.password);
 let header = {
   method: "POST",
   url: bsb_lan_url,
-  body: data_dict,
+  body: 1,
   headers: {},
   timeout: 20,
-};          
-function TokenRequest(response, error_code, error_message) {
+};         
+
+ 
+function PostData(response, error_code, error_message) {
      if (error_code === 0) {              
-        print("Datos enviados con éxito:");
+        print("Token obtenido con éxito");
         let body = JSON.parse(response.body);
         let accessToken = body.access;
-        print("Token de acceso:", accessToken);
         header.headers.Authorization = "Bearer " + accessToken;
         
+        // 3. Post data
         Shelly.call("HTTP.Request", header, function (result, error_code, error_message) {
           if (error_code === 0) {
-            print("Success: " + JSON.stringify(result));
+            print("Datos subidos al servidor");
           } else {
             print("Error code: " + error_code);
             print("Errormessage: " + error_message)
@@ -43,12 +41,29 @@ function TokenRequest(response, error_code, error_message) {
      }
 }
 
-Shelly.call("HTTP.POST",  
-            {
-              url: "https://alvarordneu.eu.pythonanywhere.com/api/token/",
-              body: JSON.stringify(token_data) ,
-              headers: {
-                "Content-Type": "application/json"
-              }               
-            }, 
-            TokenRequest)
+// 2. token request
+function TokenRequest(response, error_code, error_message) {
+  Shelly.call("HTTP.POST",  
+              {
+                url: "https://alvarordneu.eu.pythonanywhere.com/api/token/",
+                body: JSON.stringify(token_data) ,
+                headers: {
+                  "Content-Type": "application/json"
+                }               
+              }, 
+              PostData)
+              }
+
+// 1. measurements
+Shelly.call("Shelly.GetStatus", 
+  {}, 
+  function(response) {
+      let data = {
+        "voltage": response['em1:0'].voltage,
+        "current": response['em1:0'].current,
+        "power": response['em1:0'].act_power
+      };
+      header.body = data;
+      print(data);
+      TokenRequest();
+});
