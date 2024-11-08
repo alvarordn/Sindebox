@@ -55,9 +55,10 @@ function TokenRequest(response, error_code, error_message) {
               }
 
 // 1. measurements
-Shelly.call("Shelly.GetStatus", 
-  {}, 
-  function(response) {
+function GetMeasuremets(){
+  Shelly.call("Shelly.GetStatus", 
+    {}, 
+    function(response) {
       let data = {
         "voltage": response['em1:0'].voltage,
         "current": response['em1:0'].current,
@@ -66,4 +67,10 @@ Shelly.call("Shelly.GetStatus",
       header.body = data;
       print(data);
       TokenRequest();
+  });
+}
+GetMeasuremets()
+
+Timer.set(300000, true, function() {
+    GetMeasuremets();
 });
