@@ -1,3 +1,6 @@
-- Instalación del Shelly
-- Django deployment
-- Autentificación para la escritura de datos por parte del Shelly
+- Definición de los modelos:
+	- Shelly
+	- Usuarios
+	- Tarifas
+- Definición de las ventanas del frontend
+- Creación de nuevos usuarios para Shelly de oficina, casas, etc... preferiblmente desde venetna de administrador
