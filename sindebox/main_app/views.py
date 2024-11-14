@@ -13,7 +13,7 @@ from .serializers import EnergyDataSerializer
 
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def shelly_secure_post(request):
     data = json.loads(request.body)
     EnergyData.objects.create(
