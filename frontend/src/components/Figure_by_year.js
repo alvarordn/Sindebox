@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Rectangle, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-function Plotting({ data }) {
+function Figure_by_year({ data }) {
     const [visibleAreas, setVisibleAreas] = useState({
         energy_gen: true,
         energy_grid: true,
@@ -19,19 +19,27 @@ function Plotting({ data }) {
         if (name === 'energy_gen') {
             return [`Generación: ${value.toFixed(2)} W`, ''];
         } else {
-            return value;
+            if (name === 'energy_self') {
+                return [`Autoconsumo: ${value.toFixed(2)} W`, ''];
+            }else{                
+                if (name === 'energy_grid') {
+                    return [`Red: ${value.toFixed(2)} W`, ''];
+                }else{
+                    return value;
+                }
+            }
         }
     };
 
     const formatXAxis = (tickItem) => {
-        return new Date(tickItem).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const date = new Date(tickItem);
+        return date.getDate(); 
     };
 
-    // Función para personalizar el estilo de la leyenda
     const CustomLegend = (props) => {
         const { payload } = props;
         return (
-            <ul style={{ padding: 0, margin: 0, display: 'flex' }}>
+            <ul style={{ padding: 0, margin: '0 auto', display: 'flex', justifyContent: 'center', textAlign: 'center'}}>
                 {payload.map((entry, index) => (
                     <li
                         key={`legend-item-${index}`}
@@ -48,12 +56,21 @@ function Plotting({ data }) {
                             style={{
                                 width: '12px',
                                 height: '12px',
-                                backgroundColor: entry.color,
-                                opacity: 1, // Mantener opacidad completa
+                                backgroundColor: visibleAreas[entry.dataKey] ? entry.color : "#A9A9A9",
+                                opacity: 1,
                                 marginRight: '5px',
                             }}
                         ></div>
-                        <span>{entry.value}</span>
+                        <span
+                            style={{
+                                color: !visibleAreas[entry.dataKey] ? '#808080' : 'inherit'
+                            }}
+                        >
+                            {entry.value === 'energy_gen' ? 'Generación' :
+                             entry.value === 'energy_grid' ? 'Red' :
+                             entry.value === 'energy_self' ? 'Autoconsumo' :
+                             entry.value}
+                        </span>
                     </li>
                 ))}
             </ul>
@@ -63,7 +80,7 @@ function Plotting({ data }) {
     return (
         <div style={{ width: '100%', height: '400px' }}>
             <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart
+                <BarChart
                     width="100%"
                     height={400}
                     data={data}
@@ -74,65 +91,39 @@ function Plotting({ data }) {
                         bottom: 5,
                     }}
                 >
-                    <defs>
-                        <linearGradient id="PV" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#00ff00" stopOpacity={0.6} />
-                            <stop offset="95%" stopColor="#00ff00" stopOpacity={0.3} />
-                        </linearGradient>
-                        <linearGradient id="Carga" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#ff0000" stopOpacity={0.6} />
-                            <stop offset="95%" stopColor="#ff0000" stopOpacity={0.3} />
-                        </linearGradient>
-                        <linearGradient id="Autoconsumo" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#0000ff" stopOpacity={0.6} />
-                            <stop offset="95%" stopColor="#0000ff" stopOpacity={0.3} />
-                        </linearGradient>
-                    </defs>
+                
+                    <CartesianGrid strokeDasharray="3 3" />
+                    
                     <XAxis
                         dataKey="timestamp"
                         padding={{ left: 20, right: 20 }}
                         tickFormatter={formatXAxis}
                         tick={{ fontSize: 12 }}
                     />
-                    <YAxis yAxisId="left" type="number" width={80} interval={0} />
+                    <YAxis  type="number" width={80} interval={0} />
                     <CartesianGrid strokeDasharray="3 3" />
                     <Tooltip formatter={formatTooltip} />
                     <Legend content={<CustomLegend />} />
-
-                    <Area
-                        type="monotone"
+                    
+                    <Bar
                         dataKey="energy_gen"
-                        stroke="#00ff00"
-                        // strokeOpacity={visibleAreas.energy_gen ? 1 : 0}
-                        fill="url(#PV)"
-                        // fillOpacity={visibleAreas.energy_gen ? 1 : 0.0}
-                        yAxisId="left"
+                        fill="#00ff00"
                         hide={!visibleAreas.energy_gen}
                     />
-                    <Area
-                        type="monotone"
+                    <Bar
                         dataKey="energy_grid"
-                        stroke="#ff0000"
-                        // strokeOpacity={visibleAreas.energy_grid ? 1 : 0}
-                        fill="url(#Carga)"
-                        // fillOpacity={visibleAreas.energy_grid ? 1 : 0.0}
-                        yAxisId="left"
+                        fill="#ff0000"
                         hide={!visibleAreas.energy_grid}
                     />
-                    <Area
-                        type="monotone"
+                    <Bar
                         dataKey="energy_self"
-                        stroke="#0000ff"
-                        // strokeOpacity={visibleAreas.energy_self ? 1 : 0}
-                        fill="url(#Autoconsumo)"
-                        // fillOpacity={visibleAreas.energy_self ? 1 : 0.0}
-                        yAxisId="left"
+                        fill="#0000ff"
                         hide={!visibleAreas.energy_self}
                     />
-                </ComposedChart>
+                </BarChart>
             </ResponsiveContainer>
         </div>
     );
 }
 
-export default Plotting;
+export default Figure_by_year;

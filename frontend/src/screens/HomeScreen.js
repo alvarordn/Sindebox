@@ -1,48 +1,38 @@
-import React, {useState, useEffect} from 'react'
-import { Row, Col } from 'react-bootstrap'
-import axios from 'axios'
-import Plotting from '../components/Plotting'
-import DateSelector from '../components/DateSelector'
+import React from 'react'
+import { Container } from 'react-bootstrap'
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import Plot_by_day from '../components/Plot_by_day'
+import Plot_by_month from '../components/Plot_by_month';
+
 
 function HomeScreen() {
-  const [EnergyDatas, setEnergyDatas] = useState([])
-  const [selectedDate, setSelectedDate] = useState(new Date('2023-01-01'));
+  
 
-  const handleDateChange = async (newDate) => {
-    setSelectedDate(newDate);
-    const formattedDate = newDate.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
-    try {
-      const { data } = await axios.get(`http://127.0.0.1:8000/api/getdata/${formattedDate}/`);
-      setEnergyDatas(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  return (   
+    <Container> 
+      <Tabs defaultActiveKey="Dia" id="fill-tab-example" className="mb-3" fill>
+        <Tab eventKey="Dia" title="Dia">
+          <Plot_by_day/>
+        </Tab>
+          
+        <Tab eventKey="Mes" title="Mes">
+          <Plot_by_month/>
+        </Tab>
 
-  useEffect(() => {
-    // Al montar el componente, cargar los datos para la fecha actual
-    const formattedDate = selectedDate.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
-    async function fetchEnergyData() {
-      try {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/getdata/${formattedDate}/`);
-        setEnergyDatas(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-    fetchEnergyData();
-  }, [selectedDate]);
+        <Tab eventKey="Año" title="Año">
+          <span>
+            Año
+          </span>
+        </Tab>
 
-  return (
-    <div>
-      <h1>Header</h1>
-      <Row>
-        <DateSelector selectedDate={selectedDate} onDateChange={handleDateChange} />
-      </Row>
-      <Row>
-        <Plotting data={EnergyDatas}/>
-      </Row>
-    </div>
+        <Tab eventKey="Personzalizado" title="Personzalizado">
+          <span>
+            Personalizado
+          </span>
+        </Tab>
+      </Tabs>
+    </Container>
   )
 }
 
