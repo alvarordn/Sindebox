@@ -31,11 +31,11 @@ function Figure_by_year({ data }) {
         }
     };
 
-    const formatXAxis = (tickItem) => {
-        const date = new Date(tickItem);
-        return date.getDate(); 
+    const formatXAxis = (tickItem) => {        
+        const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+        return months[tickItem - 1]; 
     };
-
+    
     const CustomLegend = (props) => {
         const { payload } = props;
         return (
@@ -95,7 +95,7 @@ function Figure_by_year({ data }) {
                     <CartesianGrid strokeDasharray="3 3" />
                     
                     <XAxis
-                        dataKey="timestamp"
+                        dataKey="month"
                         padding={{ left: 20, right: 20 }}
                         tickFormatter={formatXAxis}
                         tick={{ fontSize: 12 }}
