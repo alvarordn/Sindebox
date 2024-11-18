@@ -4,7 +4,7 @@ import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from .serializers import EnergyDataSerializer 
 from django.db.models import Sum
 from django.db.models.functions import TruncDate, TruncMonth
@@ -80,6 +80,36 @@ def getyearlySmartMeterData(request, date_str):
     for data in aggregated_data:
         result.append({
             'month': data['month_only'].month,  #
+            'energy_meter': data['total_energy_meter'],
+            'energy_self': data['total_energy_self'],
+            'energy_gen': data['total_energy_gen'],
+            'energy_grid': data['total_energy_grid'],
+            'energy_extra': data['total_energy_extra']
+        })
+
+    return Response(result)
+
+
+@api_view(['GET'])
+def getCustomSmartMeterData(request, date_str1, date_str2):
+    start_date = datetime.strptime(date_str1, '%Y-%m-%d')
+    end_date = datetime.strptime(date_str2, '%Y-%m-%d')
+    end_date = datetime.combine(end_date, time.max)
+    energy_data = EnergyData.objects.filter(timestamp__range=(start_date, end_date))
+    aggregated_data = energy_data.annotate(
+        date_only=TruncDate('timestamp')
+    ).values('date_only').annotate(
+        total_energy_meter=Sum('energy_meter'),
+        total_energy_self=Sum('energy_self'),
+        total_energy_gen=Sum('energy_gen'),
+        total_energy_grid=Sum('energy_grid'),
+        total_energy_extra=Sum('energy_extra')
+    ).order_by('date_only')
+    
+    result = []
+    for data in aggregated_data:
+        result.append({
+            'timestamp': data['date_only'],  
             'energy_meter': data['total_energy_meter'],
             'energy_self': data['total_energy_self'],
             'energy_gen': data['total_energy_gen'],

@@ -5,7 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Plot_by_day from '../components/Plot_by_day'
 import Plot_by_month from '../components/Plot_by_month';
 import Plot_by_year from '../components/Plot_by_year';
-import PeriodSelector from '../components/PeriodSelector';
+import Plot_by_custom from '../components/Plot_by_custom';
 
 
 function HomeScreen() {
@@ -26,11 +26,8 @@ function HomeScreen() {
           <Plot_by_year/>
         </Tab>
 
-        <Tab eventKey="Personzalizado" title="Personzalizado">
-          <span>
-            Personalizado
-          </span>
-          <PeriodSelector/>
+        <Tab eventKey="Personalizado" title="Personalizado">
+          <Plot_by_custom/>
         </Tab>
       </Tabs>
     </Container>

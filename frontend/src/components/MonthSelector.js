@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function MonthSelector({ selectedDate, onDateChange }) {
     return (
         <div className="container mt-3">
-            <span>Selecciona una fecha </span>
+            <span>Seleccione un mes </span>
             <DatePicker
                 selected={selectedDate}
                 onChange={onDateChange} 
