@@ -17,16 +17,18 @@ class Command(BaseCommand):
             hora = row['Hora']
             minuto = row['Min']
             meter = row['Meter (W)']
+            demand = row['Demanda (W)']
             gen = row['Generación (W)']
             grid = row['Consumo de red (W)']
             extra = row['Excedentes (W)']
             selfa = row['Autoconsumo (W)']
             EnergyData.objects.create(
-                energy_meter=meter,
-                energy_gen=gen,
-                energy_grid=grid,
-                energy_extra=extra,
-                energy_self=selfa,
+                energy_meter=meter/12000,
+                energy_gen=gen/12000,
+                energy_dem=demand/12000,
+                energy_grid=grid/12000,
+                energy_extra=extra/12000,
+                energy_self=selfa/12000,
                 timestamp=str(anio) + '-' + str(mes) + '-' + str(dia) + ' ' + str(hora) + ':' + str(minuto) + ':00' 
             )            
         self.stdout.write(self.style.SUCCESS('All entries from excel have been included in EnergyData.'))

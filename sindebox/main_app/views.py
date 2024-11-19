@@ -43,6 +43,7 @@ def getMonthlySmartMeterData(request, date_str):
         total_energy_meter=Sum('energy_meter'),
         total_energy_self=Sum('energy_self'),
         total_energy_gen=Sum('energy_gen'),
+        total_energy_dem=Sum('energy_dem'),
         total_energy_grid=Sum('energy_grid'),
         total_energy_extra=Sum('energy_extra')
     ).order_by('date_only')
@@ -54,6 +55,7 @@ def getMonthlySmartMeterData(request, date_str):
             'energy_meter': data['total_energy_meter'],
             'energy_self': data['total_energy_self'],
             'energy_gen': data['total_energy_gen'],
+            'energy_dem': data['total_energy_dem'],
             'energy_grid': data['total_energy_grid'],
             'energy_extra': data['total_energy_extra']
         })
@@ -72,6 +74,7 @@ def getyearlySmartMeterData(request, date_str):
         total_energy_meter=Sum('energy_meter'),
         total_energy_self=Sum('energy_self'),
         total_energy_gen=Sum('energy_gen'),
+        total_energy_dem=Sum('energy_dem'),
         total_energy_grid=Sum('energy_grid'),
         total_energy_extra=Sum('energy_extra')
     ).order_by('month_only')
@@ -83,6 +86,7 @@ def getyearlySmartMeterData(request, date_str):
             'energy_meter': data['total_energy_meter'],
             'energy_self': data['total_energy_self'],
             'energy_gen': data['total_energy_gen'],
+            'energy_dem': data['total_energy_dem'],
             'energy_grid': data['total_energy_grid'],
             'energy_extra': data['total_energy_extra']
         })
@@ -102,6 +106,7 @@ def getCustomSmartMeterData(request, date_str1, date_str2):
         total_energy_meter=Sum('energy_meter'),
         total_energy_self=Sum('energy_self'),
         total_energy_gen=Sum('energy_gen'),
+        total_energy_dem=Sum('energy_dem'),
         total_energy_grid=Sum('energy_grid'),
         total_energy_extra=Sum('energy_extra')
     ).order_by('date_only')
@@ -113,6 +118,7 @@ def getCustomSmartMeterData(request, date_str1, date_str2):
             'energy_meter': data['total_energy_meter'],
             'energy_self': data['total_energy_self'],
             'energy_gen': data['total_energy_gen'],
+            'energy_dem': data['total_energy_dem'],
             'energy_grid': data['total_energy_grid'],
             'energy_extra': data['total_energy_extra']
         })
