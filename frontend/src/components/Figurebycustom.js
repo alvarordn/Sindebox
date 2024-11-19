@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container } from 'react-bootstrap'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 function Figurebycustom({ data }) {
@@ -15,21 +16,38 @@ function Figurebycustom({ data }) {
         }));
     };
 
-    const formatTooltip = (value, name) => {
-        if (name === 'energy_gen') {
-            return [`Generación: ${value.toFixed(2)} kWh`, ''];
-        } else {
-            if (name === 'energy_self') {
-                return [`Autoconsumo: ${value.toFixed(2)} kWh`, ''];
-            }else{                
-                if (name === 'energy_dem') {
-                    return [`Demanda: ${value.toFixed(2)} kWh`, ''];
-                }else{
-                    return value;
-                }
-            }
+    function CustomTooltip({ payload, label, active }) {
+        if (active) {
+          return (
+            <Container
+              style={{
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                borderRadius: '10px',
+                padding: '15px',
+                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                textAlign: 'center',
+              }}
+              className="p-3"
+            >
+              <p style={{ fontSize: '14px', marginBottom: '5px', fontWeight: 'bold' }}>
+                {`${label}`}
+              </p>
+              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
+                <strong>Generación:</strong> {payload[0].value.toFixed(2)} kWh
+              </p>
+              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
+                <strong>Demanda:</strong> {payload[1].value.toFixed(2)} kWh
+              </p>
+              <p style={{ fontSize: '12px' }}>
+                <strong>Autoconsumo:</strong> {payload[2].value.toFixed(2)} kWh
+              </p>
+            </Container>
+          );
         }
-    };
+      
+        return null;
+      }
+
 
     const formatXAxis = (tickItem) => {
         const date = new Date(tickItem);
@@ -102,7 +120,7 @@ function Figurebycustom({ data }) {
                     />
                     <YAxis  type="number" width={80} interval={0} />
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Tooltip formatter={formatTooltip} />
+                    <Tooltip content={<CustomTooltip />}/>
                     <Legend content={<CustomLegend />} />
                     
                     <Bar

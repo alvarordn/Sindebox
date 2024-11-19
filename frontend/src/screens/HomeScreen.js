@@ -1,36 +1,20 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import Plotbyday from '../components/Plotbyday'
-import Plotbymonth from '../components/Plotbymonth';
-import Plotbyyear from '../components/Plotbyyear';
-import Plotbycustom from '../components/Plotbycustom';
+import PlotData from './PlotData'
+import ProductionSummaryHeader from './ProductionSummaryHeader'
+import { Container, Row } from 'react-bootstrap'
 
 function HomeScreen() {
   
 
-  return (   
-    <Container> 
-      <Tabs defaultActiveKey="Dia" id="fill-tab-example" className="mb-3" fill>
-
-        <Tab eventKey="Dia" title="Dia">          
-          <Plotbyday/>
-        </Tab>
-          
-        <Tab eventKey="Mes" title="Mes">
-          <Plotbymonth/>
-        </Tab>
-
-        <Tab eventKey="Año" title="Año">
-          <Plotbyyear/>
-        </Tab>
-
-        <Tab eventKey="Personalizado" title="Personalizado">
-          <Plotbycustom/>
-        </Tab>
-      </Tabs>
-    </Container>
+  return (
+    <Container>
+      <Row>
+        <ProductionSummaryHeader data={[12.42, 4089.61, 53.35, 11.35]}/>
+      </Row>
+      <Row>
+        <PlotData/>
+      </Row>
+    </Container>   
   )
 }
 

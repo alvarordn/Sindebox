@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import MonthSelector from './MonthSelector'
 import Figurebymonth from './Figurebymonth'
+import ConsumoGeneracionBar from './ConsumoGeneracionBar'
 
 function Plotbymonth() {
 
@@ -36,9 +37,10 @@ function Plotbymonth() {
     return (
         <Container>
             <Row className="justify-content-end">
-                <Col></Col>
-                <Col></Col>
                 <Col>
+                    <ConsumoGeneracionBar data_base={EnergyDatas} />
+                </Col>
+                <Col xs lg="3">
                     <MonthSelector selectedDate={selectedDate} onDateChange={handleDateChange} />
                 </Col>        
             </Row>

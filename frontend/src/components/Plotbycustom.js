@@ -3,11 +3,12 @@ import { Container, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import PeriodSelector from './PeriodSelector'
 import Figurebycustom from './Figurebycustom'
+import ConsumoGeneracionBar from './ConsumoGeneracionBar'
 
 function Plotbycustom() {
 
     const [EnergyDatas, setEnergyDatas] = useState([])
-    const [selectedDates, setSelectedDates] = useState([new Date('2023-01-01'), new Date('2023-01-01')]);
+    const [selectedDates, setSelectedDates] = useState([new Date('2023-01-01'), new Date('2023-01-31')]);
 
     const handleDateChange = async (dates) => {
         const [start, end] = dates;
@@ -43,9 +44,10 @@ function Plotbycustom() {
     return (
         <Container>
             <Row className="justify-content-end">
-                <Col></Col>
-                <Col></Col>
                 <Col>
+                    <ConsumoGeneracionBar data_base={EnergyDatas} />
+                </Col>
+                <Col xs lg="3">
                     <PeriodSelector startDate={selectedDates[0]} endDate={selectedDates[1]} onDateChange={handleDateChange}  />
                 </Col>        
             </Row>

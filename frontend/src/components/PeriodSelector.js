@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from 'date-fns';
 
 function PeriodSelector({ startDate, endDate, onDateChange }) {
 
     return (
-        <div>
+        <div className="container mt-3">
             <span>Selecciona un periodo </span>
             <DatePicker
                 selected={startDate}

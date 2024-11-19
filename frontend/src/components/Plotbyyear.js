@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import YearSelector from './YearSelector'
 import Figurebyyear from './Figurebyyear'
+import ConsumoGeneracionBar from './ConsumoGeneracionBar'
 
 function Plotbyyear() {
 
@@ -36,9 +37,10 @@ function Plotbyyear() {
     return (
         <Container>
             <Row className="justify-content-end">
-                <Col></Col>
-                <Col></Col>
                 <Col>
+                    <ConsumoGeneracionBar data_base={EnergyDatas} />
+                </Col>
+                <Col xs lg="3">
                     <YearSelector selectedDate={selectedDate} onDateChange={handleDateChange} />
                 </Col>        
             </Row>
