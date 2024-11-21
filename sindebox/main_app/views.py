@@ -124,3 +124,30 @@ def getCustomSmartMeterData(request, date_str1, date_str2):
         })
 
     return Response(result)
+
+@api_view(['GET'])
+def getsummary(request):    
+    total_energy_gen = EnergyData.objects.aggregate(total_energy_gen=Sum('energy_gen'))
+    result = {
+        'total_energy_gen': total_energy_gen['total_energy_gen'] or 0,
+        'carbon': 0.00012283503255*total_energy_gen['total_energy_gen'] or 0,
+        'co2': 0.000463855421686747*total_energy_gen['total_energy_gen'] or 0,
+        'trees': total_energy_gen['total_energy_gen']/55.3 or 0
+    }    
+    return Response(result)
+
+@api_view(['GET'])
+def getrt(request):    
+    latest_entry = EnergyData.objects.latest('timestamp')
+    energy_data = EnergyData.objects.filter(timestamp__year=latest_entry.timestamp.year, 
+                                            timestamp__month=latest_entry.timestamp.month, 
+                                            timestamp__day=latest_entry.timestamp.day)
+    aggregated_data = energy_data.annotate(
+        date_only=TruncDate('timestamp')
+    ).values('date_only').annotate(
+        energy_self=Sum('energy_self'),
+        energy_gen=Sum('energy_gen'),
+        energy_dem=Sum('energy_dem'),
+    ).order_by('date_only')
+    
+    return Response(aggregated_data[0])

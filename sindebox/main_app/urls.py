@@ -10,4 +10,6 @@ urlpatterns = [
     path('api/getmonthlydata/<str:date_str>/', views.getMonthlySmartMeterData, name='getMonthlySmartMeterData'),
     path('api/getyearlydata/<str:date_str>/', views.getyearlySmartMeterData, name='getyearlySmartMeterData'),
     path('api/getcustomdata/<str:date_str1>/<str:date_str2>/', views.getCustomSmartMeterData, name='getCustomSmartMeterData'),
+    path('api/getsummary/', views.getsummary, name='getsummary'),
+    path('api/getrt/', views.getrt, name='getrt'),
 ]
