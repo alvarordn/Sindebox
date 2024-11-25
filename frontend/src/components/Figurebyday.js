@@ -9,6 +9,7 @@ function Figurebyday({ data }) {
         energy_self: true,
     });
 
+
     const handleLegendClick = (e) => {
         setVisibleAreas((prevState) => ({
             ...prevState,
@@ -17,7 +18,7 @@ function Figurebyday({ data }) {
     };
 
     function CustomTooltip({ payload, label, active }) {
-        if (active) {
+        if (active && data && data.length > 0) {
           return (
             <Container
               style={{
@@ -29,17 +30,54 @@ function Figurebyday({ data }) {
               }}
               className="p-3"
             >
+              {/* Hora */}
               <p style={{ fontSize: '14px', marginBottom: '5px', fontWeight: 'bold' }}>
                 {`${label.split('T')[1].slice(0, 5)}`}
               </p>
-              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
-                <strong>Generación:</strong> {payload[0].value.toFixed(2)} kWh
+      
+              {/* Generación */}
+              <p style={{ fontSize: '12px', marginBottom: '5px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#00ff00', // Color verde para generación
+                    marginRight: '8px',
+                  }}
+                ></span>
+                <strong>Generación:</strong> {payload[0].value.toFixed(2)} kW
               </p>
-              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
-                <strong>Demanda:</strong> {payload[1].value.toFixed(2)} kWh
+      
+              {/* Demanda */}
+              <p style={{ fontSize: '12px', marginBottom: '5px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#ff0000', // Color rojo para demanda
+                    marginRight: '8px',
+                  }}
+                ></span>
+                <strong>Demanda:</strong> {payload[1].value.toFixed(2)} kW
               </p>
-              <p style={{ fontSize: '12px' }}>
-                <strong>Autoconsumo:</strong> {payload[2].value.toFixed(2)} kWh
+      
+              {/* Autoconsumo */}
+              <p style={{ fontSize: '12px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#0000ff', // Color azul para autoconsumo
+                    marginRight: '8px',
+                  }}
+                ></span>
+                <strong>Autoconsumo:</strong> {payload[2].value.toFixed(2)} kW
               </p>
             </Container>
           );
@@ -47,6 +85,7 @@ function Figurebyday({ data }) {
       
         return null;
       }
+      
 
 
     const formatXAxis = (tickItem) => {
@@ -101,7 +140,14 @@ function Figurebyday({ data }) {
                 <ComposedChart
                     width="100%"
                     height={400}
-                    data={data}
+                    data={
+                      data.map(entry => ({
+                        ...entry, 
+                        energy_dem: entry.energy_dem * 12, 
+                        energy_gen: entry.energy_gen * 12, 
+                        energy_self: entry.energy_self * 12, 
+                    }))
+                    }
                     margin={{
                         top: 10,
                         right: 30,

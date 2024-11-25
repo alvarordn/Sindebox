@@ -28,14 +28,10 @@ function ConsumoGeneracionBar({ data_base }) {
 }, [data_base]);
 
   return (
-      <Container style={{ width:'95%' }}>
+      <Container class="p-4" style={{ width:'95%' }}>
         <Row>
           <Col>
-            <h5>Producción energética {data[0].toFixed(2)} kWh</h5>
-              <ProgressBar>
-                <ProgressBar animated visuallyHidden variant="info" now={data[5].toFixed(2)} label={`${data[5].toFixed(2)}%`}  key={1} />
-                <ProgressBar animated visuallyHidden variant="warning" now={data[6].toFixed(2)} label={`${data[6].toFixed(2)}%`}  key={2} />
-              </ProgressBar>
+            <h5>Producción energética {data[0].toFixed(2)} kWh</h5>              
               <Row>
                 <Col style={{ fontSize: '1.0rem' }}>
                   Autoconsumo <br />
@@ -48,13 +44,23 @@ function ConsumoGeneracionBar({ data_base }) {
                   {data[4].toFixed(2)} kWh <br />          
                 </Col>
               </Row>
+              <ProgressBar style={{ height: '20px' }}>
+                <ProgressBar animated variant="info" now={data[5].toFixed(2)}  
+                  label={
+                    <span style={{ fontSize: '16px'}}>
+                      {`${data[5].toFixed(2)}%`}
+                    </span>
+                  }   key={1} />
+                <ProgressBar animated variant="warning" now={data[6].toFixed(2)}  
+                  label={
+                    <span style={{ fontSize: '16px'}}>
+                      {`${data[6].toFixed(2)}%`}
+                    </span>
+                  }   key={2} />
+              </ProgressBar>
           </Col>
           <Col>
             <h5>Consumo {data[1].toFixed(2)} kWh</h5>
-              <ProgressBar>
-                <ProgressBar visuallyHidden animated variant="info" now={data[7].toFixed(2)} label={`${data[7].toFixed(2)}%`}  key={1} />
-                <ProgressBar visuallyHidden animated variant="danger" now={data[8].toFixed(2)} label={`${data[8].toFixed(2)}%`}  key={2} />
-              </ProgressBar>
               <Row>
                 <Col style={{ fontSize: '1.0rem' }}>
                   Autosuficiencia <br />
@@ -67,6 +73,21 @@ function ConsumoGeneracionBar({ data_base }) {
                   {data[3].toFixed(2)} kWh <br />          
                 </Col>
               </Row>
+              <ProgressBar style={{ height: '20px' }}>
+                <ProgressBar animated variant="info" now={data[7].toFixed(2)}  
+                  label={
+                    <span style={{ fontSize: '16px'}}>
+                      {`${data[7].toFixed(2)}%`}
+                    </span>
+                  }  key={1} />
+                <ProgressBar animated variant="danger" now={data[8].toFixed(2)} 
+                  label={
+                    <span style={{ fontSize: '16px'}}>
+                      {`${data[8].toFixed(2)}%`}
+                    </span>
+                  } 
+                  key={2}  />
+              </ProgressBar>
           </Col>
         </Row>
       </Container>

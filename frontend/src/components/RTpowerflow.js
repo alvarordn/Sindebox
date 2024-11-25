@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
 import { FaBatteryFull, FaPlug, FaSun  } from 'react-icons/fa'
-import RTplot from './RTplot'
+import EnergyFlow from './EnergyFlow'
 import axios from 'axios'
+import url_server from '../url_server.json'
 
 function RTpowerflow() {
   
@@ -10,12 +11,15 @@ function RTpowerflow() {
         energy_gen: 0,
         energy_dem: 0,
         energy_self: 0,
+        genrt: 0,
+        demrt: 0,
+        gridrt: 0
     });
 
     useEffect(() => {
     async function fetchEnergyData() {
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getrt/`);
+            const { data } = await axios.get(url_server.url_server + `api/getrt/`);
             setEnergyDatas(data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -28,7 +32,7 @@ function RTpowerflow() {
     <Container style={{ boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', borderRadius: '10px', padding: '20px' }}>
         <Row>
             <Col className="text-center" xs lg="5">
-                <RTplot data = {EnergyDatas} />
+                <EnergyFlow data = {EnergyDatas} />
             </Col>
             <Col className="text-center d-flex flex-column align-items-center justify-content-center" xs lg="2">
                <FaSun size={30} style={{ color: '#FDB813' }} /> <br />

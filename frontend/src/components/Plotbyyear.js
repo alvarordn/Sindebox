@@ -4,6 +4,7 @@ import axios from 'axios'
 import YearSelector from './YearSelector'
 import Figurebyyear from './Figurebyyear'
 import ConsumoGeneracionBar from './ConsumoGeneracionBar'
+import url_server from '../url_server.json'
 
 function Plotbyyear() {
 
@@ -14,7 +15,7 @@ function Plotbyyear() {
         setSelectedDate(newDate);
         const formattedDate = newDate.toISOString().split('T')[0].slice(0, 4);
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getyearlydata/${formattedDate}/`);
+            const { data } = await axios.get(url_server.url_server + `api/getyearlydata/${formattedDate}/`);
             setEnergyDatas(data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -25,7 +26,7 @@ function Plotbyyear() {
         const formattedDate = selectedDate.toISOString().split('T')[0].slice(0, 4);; 
         async function fetchEnergyData() {
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getyearlydata/${formattedDate}/`);
+            const { data } = await axios.get(url_server.url_server + `api/getyearlydata/${formattedDate}/`);
             setEnergyDatas(data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -40,12 +41,14 @@ function Plotbyyear() {
                 <Col>
                     <ConsumoGeneracionBar data_base={EnergyDatas} />
                 </Col>
-                <Col xs lg="3">
+                <Col className="d-flex justify-content-center align-items-center mt-2" xs="auto">
                     <YearSelector selectedDate={selectedDate} onDateChange={handleDateChange} />
                 </Col>        
             </Row>
-            <Row>
-                <Figurebyyear data={EnergyDatas}/>
+            <Row className="mt-4">
+                <Col>
+                    <Figurebyyear data={EnergyDatas}/>
+                </Col>
             </Row>
         </Container>
     )

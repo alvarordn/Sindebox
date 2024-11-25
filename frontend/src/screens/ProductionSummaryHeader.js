@@ -3,6 +3,7 @@ import { Container, Col, Row } from 'react-bootstrap'
 import { FaIndustry, FaTree, FaBolt  } from 'react-icons/fa'
 import { GiFuelTank } from 'react-icons/gi'
 import axios from 'axios'
+import url_server from '../url_server.json'
 
 function ProductionSummaryHeader() {
 
@@ -16,7 +17,7 @@ function ProductionSummaryHeader() {
     useEffect(() => {
       async function fetchEnergyData() {
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getsummary/`);
+            const { data } = await axios.get(url_server.url_server + `api/getsummary/`);
             setEnergyDatas(data);
         } catch (error) {
             console.error('Error fetching data:', error);

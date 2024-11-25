@@ -9,7 +9,7 @@ function HomeScreen() {
   
 
   return (
-    <Container>
+    <Container >
       <Row>
         <ProductionSummaryHeader/>
       </Row>

@@ -150,4 +150,15 @@ def getrt(request):
         energy_dem=Sum('energy_dem'),
     ).order_by('date_only')
     
-    return Response(aggregated_data[0])
+    latest_gen = latest_entry.energy_gen
+    latest_dem = latest_entry.energy_dem
+    latest_grid = latest_entry.energy_grid
+    
+    response_data = aggregated_data[0] if aggregated_data else {}    
+    response_data.update({
+        'genrt': latest_gen,
+        'demrt': latest_dem,
+        'gridrt': latest_grid
+    })
+    
+    return Response(response_data)

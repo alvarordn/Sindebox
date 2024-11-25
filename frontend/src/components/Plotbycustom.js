@@ -4,6 +4,7 @@ import axios from 'axios'
 import PeriodSelector from './PeriodSelector'
 import Figurebycustom from './Figurebycustom'
 import ConsumoGeneracionBar from './ConsumoGeneracionBar'
+import url_server from '../url_server.json'
 
 function Plotbycustom() {
 
@@ -16,7 +17,7 @@ function Plotbycustom() {
         if (start && end) {
             const formattedDate = start.toISOString().split('T')[0] + '/' + end.toISOString().split('T')[0]; 
             try {
-                const { data } = await axios.get(`http://127.0.0.1:8000/api/getcustomdata/${formattedDate}/`);
+                const { data } = await axios.get(url_server.url_server + `api/getcustomdata/${formattedDate}/`);
                 setEnergyDatas(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -31,7 +32,7 @@ function Plotbycustom() {
             const formattedDate = selectedDates[0].toISOString().split('T')[0] + '/' + selectedDates[1].toISOString().split('T')[0]; 
             async function fetchEnergyData() {
                 try {
-                    const { data } = await axios.get(`http://127.0.0.1:8000/api/getcustomdata/${formattedDate}/`);
+                    const { data } = await axios.get(url_server.url_server + `api/getcustomdata/${formattedDate}/`);
                     setEnergyDatas(data);
                 } catch (error) {
                     console.error('Error fetching data:', error);
@@ -47,12 +48,14 @@ function Plotbycustom() {
                 <Col>
                     <ConsumoGeneracionBar data_base={EnergyDatas} />
                 </Col>
-                <Col xs lg="3">
+                <Col className="d-flex justify-content-center align-items-center mt-2" xs="auto">
                     <PeriodSelector startDate={selectedDates[0]} endDate={selectedDates[1]} onDateChange={handleDateChange}  />
                 </Col>        
             </Row>
-            <Row>
-                <Figurebycustom data={EnergyDatas}/>
+            <Row className="mt-4">
+                <Col>
+                    <Figurebycustom data={EnergyDatas}/>
+                </Col>
             </Row>
         </Container>
     )

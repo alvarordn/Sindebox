@@ -16,10 +16,11 @@ function Figurebyyear({ data }) {
         }));
     };
 
-    function CustomTooltip({ payload, label, active }) {
+    
+    function CustomTooltip({ payload, label, active }) {        
         const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
             "Julio", "Agosto", "Septiembre", "Octubre", "Novimebre", "Diciembre"];
-        if (active) {
+          if (active && data && data.length > 0) {
           return (
             <Container
               style={{
@@ -31,16 +32,53 @@ function Figurebyyear({ data }) {
               }}
               className="p-3"
             >
+              {/* Hora */}
               <p style={{ fontSize: '14px', marginBottom: '5px', fontWeight: 'bold' }}>
-                {`${months[label-1]}`}
+               {months[label-1]}
               </p>
-              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
+      
+              {/* Generación */}
+              <p style={{ fontSize: '12px', marginBottom: '5px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#00ff00', // Color verde para generación
+                    marginRight: '8px',
+                  }}
+                ></span>
                 <strong>Generación:</strong> {payload[0].value.toFixed(2)} kWh
               </p>
-              <p style={{ fontSize: '12px', marginBottom: '5px' }}>
+      
+              {/* Demanda */}
+              <p style={{ fontSize: '12px', marginBottom: '5px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#ff0000', // Color rojo para demanda
+                    marginRight: '8px',
+                  }}
+                ></span>
                 <strong>Demanda:</strong> {payload[1].value.toFixed(2)} kWh
               </p>
-              <p style={{ fontSize: '12px' }}>
+      
+              {/* Autoconsumo */}
+              <p style={{ fontSize: '12px', textAlign: 'left' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: '#0000ff', // Color azul para autoconsumo
+                    marginRight: '8px',
+                  }}
+                ></span>
                 <strong>Autoconsumo:</strong> {payload[2].value.toFixed(2)} kWh
               </p>
             </Container>

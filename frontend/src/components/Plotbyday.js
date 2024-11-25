@@ -4,6 +4,7 @@ import axios from 'axios'
 import Figurebyday from './Figurebyday'
 import DaySelector from './DaySelector'
 import ConsumoGeneracionBar from './ConsumoGeneracionBar'
+import url_server from '../url_server.json'
 
 function  Plotbyday() {
 
@@ -14,7 +15,7 @@ function  Plotbyday() {
         setSelectedDate(newDate);
         const formattedDate = newDate.toISOString().split('T')[0]; 
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getdailydata/${formattedDate}/`);
+            const { data } = await axios.get(url_server.url_server + `api/getdailydata/${formattedDate}/`);
             setEnergyDatas([...data]);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -25,7 +26,7 @@ function  Plotbyday() {
         const formattedDate = selectedDate.toISOString().split('T')[0]; 
         async function fetchEnergyData() {
         try {
-            const { data } = await axios.get(`http://127.0.0.1:8000/api/getdailydata/${formattedDate}/`);
+            const { data } = await axios.get(url_server.url_server + `api/getdailydata/${formattedDate}/`);
             setEnergyDatas([...data]);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -40,12 +41,14 @@ function  Plotbyday() {
                 <Col>
                     <ConsumoGeneracionBar data_base={EnergyDatas} />
                 </Col>
-                <Col xs lg="3">
+                <Col className="d-flex justify-content-center align-items-center mt-2" xs="auto">
                     <DaySelector selectedDate={selectedDate} onDateChange={handleDateChange} />
                 </Col>        
             </Row>
-            <Row>
-                <Figurebyday data={EnergyDatas}/>
+            <Row className="mt-4">
+                <Col>
+                    <Figurebyday data={EnergyDatas}/>
+                </Col>
             </Row>
         </Container>
     )
