@@ -1,0 +1,29 @@
+{% extends 'base_template.html' %}
+
+{% block content %}
+
+<div class="main_container">
+    <h1> Datos de los SmartMeters </h1>
+    <div class="grid grid--three">
+        {% for dato in datos %}
+
+            <div class="column">
+
+                <div class='card' >
+                    <a href='{% url 'dato' dato.id %}'>
+                        <div class="card__body">
+                            <h4>{{ dato.timestamp }}</h4>
+                            <p>{{ dato.voltage }}</p>  
+                            <p>{{ dato.current  }}</p>  
+                            <p>{{ dato.power  }}</p>  
+                        </div>  
+                    </a>
+                </div>   
+
+            </div>  
+
+        {% endfor %}
+    </div>  
+</div>  
+
+{% endblock content %}
